@@ -14,7 +14,7 @@ function download(url, filename, contentType, successCallback, errorCallback){
                 if (!!successCallback && typeof(successCallback) === 'function'){
                     successCallback(entry, contentType);
                 }
-                console.log("download complete: " + entry.toURL());
+                console.log("download complete: " + entry.nativeURL);
             }, function(error){
                 if (!!errorCallback && typeof(errorCallback) === 'function'){
                     errorCallback(error);
@@ -39,12 +39,12 @@ function downloadDocument(args, successCallback, errorCallback){
 
             fileTransfer.download(
                 uri,
-                fileEntry.toURL(),
+                fileEntry.nativeURL,
                 function(entry) {
                     if (!!successCallback && typeof(successCallback) === 'function'){
                         successCallback(entry, contentType);
                     }
-                    //console.log("download complete: " + entry.toURL());
+                    //console.log("download complete: " + entry.nativeURL);
                 },
                 function(error) {
                      if (!!errorCallback && typeof(errorCallback) === 'function'){
@@ -145,7 +145,7 @@ exports.open = function (arg0, success, error) {
         console.log('MESSAGE RECEIVED FROM IN_APP_BROWSER');
         download(args.data.url, args.data.filename, args.data.contentType, function(entry, contentType){
             if (fileOpenMode === "open"){
-                cordova.plugins.fileOpener2.open(entry.toURL(), contentType,
+                cordova.plugins.fileOpener2.open(entry.nativeURL, contentType,
                     function(e){
                         error(e);
                     },
@@ -156,7 +156,7 @@ exports.open = function (arg0, success, error) {
             }
             if (fileOpenMode === "dialog"){
                 if (cordova.platformId === 'android'){
-                    cordova.plugins.fileOpener2.save(entry.toURL(), args.data.filename, contentType,
+                    cordova.plugins.fileOpener2.save(entry.nativeURL, args.data.filename, contentType,
                         function(e){
                             error(e);
                         },
@@ -165,7 +165,7 @@ exports.open = function (arg0, success, error) {
                         }
                     );
                 } else if(cordova.platformId === 'ios'){
-                    cordova.plugins.fileOpener2.showOpenWithDialog(entry.toURL(), contentType,
+                    cordova.plugins.fileOpener2.showOpenWithDialog(entry.nativeURL, contentType,
                         function(e){
                             error(e);
                         },
